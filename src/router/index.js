@@ -8,15 +8,15 @@ import NotFound from '@/views/NotFound';
 
 const routes = [
   { path: '/', redirect: '/coaches' },
-  { path: '/coaches', components: CoachesList },
+  { path: '/coaches', component: CoachesList },
   {
     path: '/coaches/:id',
-    components: CoachDetail,
-    children: [{ path: 'contact', components: ContactCoach }],
+    component: CoachDetail,
+    children: [{ path: 'contact', component: ContactCoach }],
   },
-  { path: '/register', components: CoachRegistration },
-  { path: '/request', components: RequestsReceived },
-  { path: '/:notFound(.*)', components: NotFound },
+  { path: '/register', component: CoachRegistration },
+  { path: '/request', component: RequestsReceived },
+  { path: '/:notFound(.*)', component: NotFound },
 ];
 
 const router = createRouter({
