@@ -4,7 +4,10 @@ import coachesModule from './modules/coaches/index';
 import requestsModule from './modules/requests/index';
 
 export default createStore({
-  state: {},
+  state: {
+    userId: 'c3',
+  },
+  getters: {},
   mutations: {},
   actions: {},
   modules: {
