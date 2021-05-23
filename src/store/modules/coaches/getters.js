@@ -32,4 +32,14 @@ export default {
 
     return coaches.some((coach) => coach.id === userId);
   },
+
+  shouldUpdate(state) {
+    const lastFetched = state.lastFetch;
+    if (!lastFetched) {
+      return true;
+    }
+    const currentTimestamp = new Date().getTime();
+
+    return (currentTimestamp - lastFetched) / 1000 > 60;
+  },
 };

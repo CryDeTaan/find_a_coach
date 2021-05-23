@@ -1,5 +1,11 @@
 export default {
-  async fetchCoaches(context) {
+  async fetchCoaches(context, payload) {
+    // Only fetched coaches if last fetch was more that n minute, or
+    // forced refresh was not used.
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
+
     const baseUrl =
       'https://find-a-coach-using-vue3-default-rtdb.europe-west1.firebasedatabase.app/';
 
@@ -28,6 +34,7 @@ export default {
     }
 
     context.commit('setCoaches', coaches);
+    context.commit('setFetchTimestamp');
   },
   async registerCoach(context, data) {
     const userId = context.rootState.userId;
