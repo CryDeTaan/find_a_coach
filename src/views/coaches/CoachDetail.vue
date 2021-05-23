@@ -45,7 +45,7 @@ export default {
       return this.coach.firstName + ' ' + this.coach.lastName;
     },
     contactLink() {
-      return this.$route.path + '/' + this.id + '/contact';
+      return this.$route.path + '/contact';
     },
     ...mapGetters('coaches', ['getCoach']),
   },
