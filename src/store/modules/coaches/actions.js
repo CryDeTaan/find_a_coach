@@ -37,7 +37,7 @@ export default {
     context.commit('setFetchTimestamp');
   },
   async registerCoach(context, data) {
-    const userId = context.rootState.userId;
+    const userId = context.rootGetters['auth/userId'];
 
     const coachData = {
       // id: context.rootState.userId, // UserId is stored in URL
@@ -48,9 +48,13 @@ export default {
       areas: data.areas,
     };
     const baseUrl =
-      'https://find-a-coach-using-vue3-default-rtdb.europe-west1.firebasedatabase.app/';
+      'https://find-a-coach-using-vue3-default-rtdb.europe-west1.firebasedatabase.app';
+    const uri = `coaches/${userId}.json`;
+    const userToken = context.rootGetters['auth/userToken'];
 
-    const response = await fetch(baseUrl + `coaches/${userId}.json`, {
+    const fullUrlWithAuth = `${baseUrl}/${uri}?auth=${userToken}`;
+
+    const response = await fetch(fullUrlWithAuth, {
       method: 'PUT',
       body: JSON.stringify(coachData),
     });
