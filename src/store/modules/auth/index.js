@@ -5,7 +5,11 @@ import mutations from './mutations';
 export default {
   namespaced: true,
   state() {
-    return { userId: 'c3' };
+    return {
+      userId: null,
+      token: null,
+      tokenExpiration: null,
+    };
   },
   actions,
   getters,
