@@ -16,7 +16,13 @@
           <base-button @click="loadCoaches(true)" mode="outline"
             >Refresh
           </base-button>
-          <base-button v-if="!isLoading && !isCoach" link to="/register"
+          <base-button v-if="!isAuthenticated" link to="/auth"
+            >Login
+          </base-button>
+          <base-button
+            v-if="isAuthenticated && !isLoading && !isCoach"
+            link
+            to="/register"
             >Register as Coach
           </base-button>
         </div>
@@ -67,6 +73,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['isAuthenticated']),
     ...mapGetters('coaches', ['hasCoaches', 'filteredCoaches', 'isCoach']),
   },
 

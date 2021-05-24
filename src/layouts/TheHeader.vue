@@ -8,8 +8,11 @@
         <li>
           <router-link to="/coaches">All Coaches</router-link>
         </li>
-        <li>
+        <li v-if="isAuthenticated">
           <router-link to="/requests">Requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">Login</router-link>
         </li>
       </ul>
     </nav>
@@ -17,8 +20,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'TheHeader',
+
+  computed: {
+    ...mapGetters('auth', ['isAuthenticated']),
+  },
 };
 </script>
 

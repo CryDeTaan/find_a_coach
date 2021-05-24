@@ -26,9 +26,9 @@ export default {
     return state.coaches.find((coach) => coach.id === id);
   },
 
-  isCoach(state, getters, rootState) {
+  isCoach(state, getters, rootState, rootGetters) {
     const coaches = getters.coaches;
-    const userId = rootState.userId;
+    const userId = rootGetters['auth/userId'];
 
     return coaches.some((coach) => coach.id === userId);
   },
