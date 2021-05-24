@@ -29,12 +29,14 @@ export default {
     // context.commit('registerCoach', { ...coachData, id: userId });
   },
   async fetchRequests(context) {
-    const coachId = context.rootState.userId;
+    const coachId = context.rootGetters['auth/userId'];
 
     const baseUrl =
       'https://find-a-coach-using-vue3-default-rtdb.europe-west1.firebasedatabase.app';
-
-    const response = await fetch(`${baseUrl}/requests/${coachId}.json`);
+    const uri = `requests/${coachId}.json`;
+    const userToken = context.rootGetters['auth/userToken'];
+    const fullUrlWithAuth = `${baseUrl}/${uri}?auth=${userToken}`;
+    const response = await fetch(fullUrlWithAuth);
     const responseData = await response.json();
 
     if (!response.ok) {
