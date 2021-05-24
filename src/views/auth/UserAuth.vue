@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'UserAuth',
 
@@ -51,13 +53,21 @@ export default {
   },
 
   methods: {
+    ...mapActions('auth', ['signup', 'login']),
     submitForm() {
       this.formIsValid = true;
       if (this.email === '' || this.password.length < 6) {
         this.formIsValid = false;
         return;
       }
-      // send http request...
+      if (this.mode === 'login') {
+        // ...
+      } else {
+        this.signup({
+          email: this.email,
+          password: this.password,
+        });
+      }
     },
     switchAuthMode() {
       if (this.mode === 'login') {
