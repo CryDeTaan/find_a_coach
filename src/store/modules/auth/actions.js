@@ -1,4 +1,5 @@
 import router from '@/router/index';
+let timer;
 export default {
   login(context, payload) {
     return context.dispatch('auth', {
@@ -40,31 +41,55 @@ export default {
       throw new Error(responseData.message || 'Failed to authenticate.');
     }
 
+    const expiresIn = +responseData.expiresIn * 1000;
+    const expirationDate = new Date().getTime() + expiresIn;
+
     localStorage.setItem('token', responseData.idToken);
     localStorage.setItem('userId', responseData.localId);
-    context.commit('setUser', { ...responseData });
+    localStorage.setItem('tokenExpiration', expirationDate);
+
+    timer = setTimeout(function () {
+      context.dispatch('logout');
+    }, expiresIn);
+
+    context.commit('setUser', {
+      ...responseData,
+      tokenExpiration: expirationDate,
+    });
   },
   tryLogin(context) {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
+    const tokenExpiration = localStorage.getItem('tokenExpiration');
+
+    const expiresIn = +tokenExpiration - new Date().getTime();
+
+    if (expiresIn < 1000) {
+      return;
+    }
+
+    timer = setTimeout(function () {
+      context.dispatch('logout');
+    }, expiresIn);
 
     if (token && userId) {
       context.commit('setUser', {
         idToken: token,
         localId: userId,
-        expiresIn: null,
       });
     }
   },
   logout(context) {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    localStorage.removeItem('tokenExpiration');
+
+    clearTimeout(timer);
 
     context.commit('setUser', {
       responseData: {
         idToken: null,
         localId: null,
-        expiresIn: null,
       },
     });
     router.replace('/coaches');
