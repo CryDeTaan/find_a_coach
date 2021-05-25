@@ -14,19 +14,25 @@
         <li v-else>
           <router-link to="/auth">Login</router-link>
         </li>
+        <li v-if="isAuthenticated">
+          <base-button @click="logout">Logout</base-button>
+        </li>
       </ul>
     </nav>
   </header>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'TheHeader',
 
   computed: {
     ...mapGetters('auth', ['isAuthenticated']),
+  },
+  methods: {
+    ...mapActions('auth', ['logout']),
   },
 };
 </script>

@@ -1,3 +1,4 @@
+import router from '@/router/index';
 export default {
   async login(context, payload) {
     const APIKey = 'AIzaSyA0iUxUnSP8scI4wfoWA2wBW1zZmiPXozg';
@@ -45,5 +46,15 @@ export default {
     }
 
     context.commit('setUser', { responseData });
+  },
+  logout(context) {
+    context.commit('setUser', {
+      responseData: {
+        idToken: null,
+        localId: null,
+        expiresIn: null,
+      },
+    });
+    router.replace('/coaches');
   },
 };
