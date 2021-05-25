@@ -42,7 +42,7 @@ export default {
 
     localStorage.setItem('token', responseData.idToken);
     localStorage.setItem('userId', responseData.localId);
-    context.commit('setUser', { responseData });
+    context.commit('setUser', { ...responseData });
   },
   logout(context) {
     context.commit('setUser', {
