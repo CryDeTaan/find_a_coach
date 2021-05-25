@@ -49,7 +49,7 @@ export default {
     localStorage.setItem('tokenExpiration', expirationDate);
 
     timer = setTimeout(function () {
-      context.dispatch('logout');
+      context.dispatch('autoLogout');
     }, expiresIn);
 
     context.commit('setUser', {
@@ -69,7 +69,7 @@ export default {
     }
 
     timer = setTimeout(function () {
-      context.dispatch('logout');
+      context.dispatch('autoLogout');
     }, expiresIn);
 
     if (token && userId) {
@@ -93,5 +93,9 @@ export default {
       },
     });
     router.replace('/coaches');
+  },
+  autoLogout(context) {
+    context.dispatch('logout');
+    context.commit('setAutoLogout');
   },
 };

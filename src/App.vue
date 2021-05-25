@@ -10,12 +10,23 @@
 
 <script>
 import TheHeader from '@/layouts/TheHeader';
+import { mapGetters } from 'vuex';
 export default {
   components: {
     TheHeader,
   },
   created() {
     this.$store.dispatch('auth/tryLogin');
+  },
+  computed: {
+    ...mapGetters('auth', ['didAutoLogout']),
+  },
+  watch: {
+    didAutoLogout(currentValue, oldValue) {
+      if (currentValue && currentValue !== oldValue) {
+        this.$router.replace('/coaches');
+      }
+    },
   },
 };
 </script>

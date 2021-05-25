@@ -8,6 +8,7 @@ export default {
     return {
       userId: null,
       token: null,
+      didAutoLogout: false,
     };
   },
   actions,
