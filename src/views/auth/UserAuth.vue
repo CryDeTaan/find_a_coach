@@ -81,6 +81,8 @@ export default {
             email: this.email,
             password: this.password,
           });
+          const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+          await this.$router.replace(redirectUrl);
         } else {
           await this.signup({
             email: this.email,

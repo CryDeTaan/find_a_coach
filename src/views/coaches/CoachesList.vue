@@ -16,8 +16,8 @@
           <base-button @click="loadCoaches(true)" mode="outline"
             >Refresh
           </base-button>
-          <base-button v-if="!isAuthenticated" link to="/auth"
-            >Login
+          <base-button v-if="!isAuthenticated" link to="/auth?redirect=register"
+            >Login to Register as Coach
           </base-button>
           <base-button
             v-if="isAuthenticated && !isLoading && !isCoach"
