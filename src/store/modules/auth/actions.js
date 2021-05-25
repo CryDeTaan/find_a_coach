@@ -40,6 +40,8 @@ export default {
       throw new Error(responseData.message || 'Failed to authenticate.');
     }
 
+    localStorage.setItem('token', responseData.idToken);
+    localStorage.setItem('userId', responseData.localId);
     context.commit('setUser', { responseData });
   },
   logout(context) {
